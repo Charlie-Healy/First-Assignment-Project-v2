@@ -11,7 +11,7 @@ public class SpriteScript : MonoBehaviour
     bool isGrounded;
     bool isJumping;
     bool isAttacking;
-    bool isTeleport;
+    bool isTeleport = false;
     int jumpForce = 10;
 
     //float speed
@@ -114,23 +114,34 @@ public class SpriteScript : MonoBehaviour
 
     void TeleportPlayer()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift) == true && rb.velocity.x > 0.2f)
+        if(Input.GetKeyDown(KeyCode.LeftShift) == true && rb.velocity.x > 0.2f && isTeleport == false)
         {
             transform.position=new Vector3(transform.position.x+10f, transform.position.y);
             isTeleport = true;
             anim.SetBool("teleport" , true);
+            CoolDown();
+            
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) == true && rb.velocity.x < -0.2f)
+        if (Input.GetKeyDown(KeyCode.LeftShift) == true && rb.velocity.x < -0.2f && isTeleport == false)
         {
             transform.position = new Vector3(transform.position.x -10f, transform.position.y);
             isTeleport = true;
             anim.SetBool("teleport", true);
+            CoolDown();
         }
 
+        
+
+    }
+    void CoolDown()
+    {
+        Invoke("CanTeleport", 2);
     }
     
-    
-
+    void CanTeleport()
+    {
+        isTeleport = false;
+    }
     public void AttackFrame()
     {
         //do a raycast towards the enemy
