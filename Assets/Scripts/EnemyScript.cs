@@ -43,6 +43,8 @@ public class EnemyScript : MonoBehaviour
         }
 
         helper.DoRayCollisionCheck();
+
+       
     }
 
 }

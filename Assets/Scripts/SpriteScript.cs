@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class SpriteScript : MonoBehaviour
 {
+
     SpriteRenderer sr;
     Rigidbody2D rb;
     Animator anim;
     bool isGrounded;
     bool isJumping;
+    bool isAttacking;
+    bool isTeleport;
     int jumpForce = 10;
 
     //float speed
     float speed;
 
     Helper helper;
+    LayerMask attackLayerMask;
 
 
 
@@ -24,9 +28,11 @@ public class SpriteScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        attackLayerMask = LayerMask.GetMask("Attack");
 
-        isGrounded = false;
-        isJumping = false;
+        //isAttacking = false;
+        //isGrounded = false;
+        //isJumping = false;
         speed = 5.0f;
     }
     public void Update()
@@ -40,8 +46,9 @@ public class SpriteScript : MonoBehaviour
         MoveSprite();
         DoJump();
         DoLand();
+        DoAttack();
+        TeleportPlayer();
     }
-
     void DoJump()
     {
         if (Input.GetKeyDown("space") && isGrounded)
@@ -71,13 +78,13 @@ public class SpriteScript : MonoBehaviour
         if (Input.GetKey("a") == true)
         {
             print("player pressed a");
-            rb.velocity = new Vector2(-8f, rb.velocity.y);
+            rb.velocity = new Vector2(-13f, rb.velocity.y);
             sr.flipX = true;
         }
         if (Input.GetKey("d") == true)
         {
             print("player pressed d");
-            rb.velocity = new Vector2(8f, rb.velocity.y);
+            rb.velocity = new Vector2(13f, rb.velocity.y);
             sr.flipX = false;
         }
 
@@ -90,6 +97,47 @@ public class SpriteScript : MonoBehaviour
                 anim.SetBool("walk", true);
             }
         }
+    }
+
+    void DoAttack()
+    {
+        if (Input.GetKeyDown("f") == true)
+        {
+            
+            print("player pressed attack");
+            anim.SetTrigger("attack");
+            
+
+
+        }
+    }
+
+    void TeleportPlayer()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftShift) == true && rb.velocity.x > 0.2f)
+        {
+            transform.position=new Vector3(transform.position.x+10f, transform.position.y);
+            isTeleport = true;
+            anim.SetBool("teleport" , true);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) == true && rb.velocity.x < -0.2f)
+        {
+            transform.position = new Vector3(transform.position.x -10f, transform.position.y);
+            isTeleport = true;
+            anim.SetBool("teleport", true);
+        }
+
+    }
+    
+    
+
+    public void AttackFrame()
+    {
+        //do a raycast towards the enemy
+        print("attack frame!!");
+
+        helper.ExtendedRayCollisionCheck( 0,0, 2, Vector2.right);
+        
     }
 
 

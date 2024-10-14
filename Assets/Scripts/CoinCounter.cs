@@ -17,12 +17,12 @@ public class CoinCounter : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        coinText.text = "COINS: " + currentCoins.ToString();
+        coinText.text = "POINTS: " + currentCoins.ToString();
     }
     public void IncreaseCoins(int v)
     {
         currentCoins += v;
-        coinText.text = "COINS: " + currentCoins.ToString();
+        coinText.text = "POINTS: " + currentCoins.ToString();
     }
 
 }
