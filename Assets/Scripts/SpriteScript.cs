@@ -129,6 +129,7 @@ public class SpriteScript : MonoBehaviour
             anim.SetBool("teleport", true);
             CoolDown();
         }
+        
 
         
 

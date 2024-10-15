@@ -13,7 +13,7 @@ public class Helper : MonoBehaviour
 
     public bool DoRayCollisionCheck()
     {
-        float rayLength = 1.5f;
+        float rayLength = 2f;
 
         RaycastHit2D hit;
 
