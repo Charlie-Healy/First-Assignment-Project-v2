@@ -7,12 +7,15 @@ public class EnemyRange : MonoBehaviour
     public float speed;
     public float range;
     public Transform player;
+    Animator anim;
+    bool isGrounded;
+    Rigidbody2D rb;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -21,7 +24,11 @@ public class EnemyRange : MonoBehaviour
         if (Vector3.Distance(player.position, transform.position) <= range)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            
         }
+        
+
+
 
     }
 

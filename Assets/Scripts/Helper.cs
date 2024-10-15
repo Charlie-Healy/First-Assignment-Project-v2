@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Helper : MonoBehaviour
 {
+    
     LayerMask groundLayerMask;
     LayerMask attackLayerMask;
     public void Start()
     {
+        
         groundLayerMask = LayerMask.GetMask("Ground");
     }
 

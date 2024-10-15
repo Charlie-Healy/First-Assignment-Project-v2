@@ -1,10 +1,12 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SpriteScript : MonoBehaviour
 {
-
+    public static CoolDownMeterScript instance;
     SpriteRenderer sr;
     Rigidbody2D rb;
     Animator anim;
@@ -48,6 +50,7 @@ public class SpriteScript : MonoBehaviour
         DoLand();
         DoAttack();
         TeleportPlayer();
+        
     }
     void DoJump()
     {
