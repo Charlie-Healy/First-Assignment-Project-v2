@@ -13,7 +13,7 @@ public class DeathScript : MonoBehaviour
         }
         if (other.gameObject.tag == "Enemy")
         {
-            SceneManager.LoadScene("SampleScene");
+            //SceneManager.LoadScene("SampleScene");
         }
 
     }
