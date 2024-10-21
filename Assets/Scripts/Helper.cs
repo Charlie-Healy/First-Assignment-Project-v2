@@ -54,7 +54,7 @@ public class Helper : MonoBehaviour
         RaycastHit2D hit;
 
 
-        hit = Physics2D.Raycast(transform.position + offset, direction, rayLength, attackLayerMask);
+        hit = Physics2D.Raycast(transform.position + offset, direction, rayLength, groundLayerMask);
 
         Color hitColor = Color.white;
 

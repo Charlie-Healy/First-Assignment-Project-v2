@@ -4,85 +4,53 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject enemy;
-    SpriteRenderer sr;
+
+    [SerializeField] float patrolSpeed;
+
+    float currentSpeed;
+    private Animator anim;
+
     Helper helper;
-    Animator anim;
-    bool isGrounded;
     Rigidbody2D rb;
-    bool isJumping;
-    Vector2 lastPos;
+    SpriteRenderer sr;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         helper = gameObject.AddComponent<Helper>();
+        rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
-        //isJumping = false;
+        currentSpeed = patrolSpeed;
 
-
-        if (player.transform.position.x > transform.position.x)
-        {
-            sr.flipX = false;
-            sr.flipY = false;
-            //anim.SetBool("Run" , false );  
-        }
-        else
-        {
-            //anim.SetBool("Run", true);
-        }
     }
-
-    // Update is called once per frame
     void Update()
     {
-        float dx = lastPos.x - transform.position.x;
-        float dy = lastPos.y - transform.position.y;
-
-        anim.SetBool("Run", false);
-
-        print("dxy= " + dx + " " + dy);
-
-        if (dy < -0.5f || dy > 0.5f)
-        {
-            //if (player.transform.position.y > transform.position.y)
-            {
-                anim.SetBool("Jump", true);
-                anim.SetBool("Run", false);
-            }
-        }
-        else
-        {
-            anim.SetBool("Jump", false);
-        }
-
-        if ( dx<-0.2f || dx>0.2f )
-        {
-            sr.flipX = true;
-            sr.flipY = false;
-            anim.SetBool("Run", true);
-            anim.SetBool("Jump", false);
-
-        }
-        else
-        {
-            sr.flipX = false;
-            sr.flipY = false;
-        }
-        
-
-        if (player.transform.position.y < transform.position.y)
-        {
-            sr.flipY = false;
-        }
-
-        helper.DoRayCollisionCheck();
-
-       lastPos = transform.position;
+        rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+        EnemyPatrol();
     }
+    public void EnemyPatrol()
+    {
+        bool lefthit = helper.ExtendedRayCollisionCheck(-1f, -1f, 2, Vector2.down);
+        bool righthit = helper.ExtendedRayCollisionCheck(1f, -1f, 2, Vector2.down);
+        
+        anim.SetBool("Run" , true);
 
+        if(currentSpeed < 0f && !lefthit)
+        {
+            transform.localScale = new Vector3(10,10,1);
+            currentSpeed = patrolSpeed;
+        }
+        else if (currentSpeed > 0f && !righthit)
+        {
+            transform.localScale = new Vector3(10, 10, 1);
+            currentSpeed = -patrolSpeed;
+        }
+        if (gameObject.tag == ("Respawn"))
+        {
+            transform.localScale = new Vector3(10, 10, 1);
+            //patrolSpeed = -patrolSpeed;
+        }
+    }
 }
