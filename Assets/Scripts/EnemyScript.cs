@@ -41,11 +41,13 @@ public class EnemyScript : MonoBehaviour
         {
             transform.localScale = new Vector3(10,10,1);
             currentSpeed = patrolSpeed;
+            sr.flipX = false;
         }
         else if (currentSpeed > 0f && !righthit)
         {
             transform.localScale = new Vector3(10, 10, 1);
             currentSpeed = -patrolSpeed;
+            sr.flipX = true;
         }
         if (gameObject.tag == ("Respawn"))
         {
