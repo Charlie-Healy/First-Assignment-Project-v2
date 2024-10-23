@@ -50,7 +50,7 @@ public class SpriteScript : MonoBehaviour
         DoLand();
         DoAttack();
         TeleportPlayer();
-        
+
     }
     void DoJump()
     {
@@ -61,6 +61,14 @@ public class SpriteScript : MonoBehaviour
             anim.SetBool("walk", false);
             isJumping = true;
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+        {
+            rb.AddForce(new Vector3(0, 3, 0) * jumpForce, ForceMode2D.Impulse);
+            anim.SetBool("jump", true);
+            anim.SetBool("walk", false);
+            isJumping = true;
+        }
+        
     }
 
     void DoLand()
@@ -87,6 +95,16 @@ public class SpriteScript : MonoBehaviour
         if (Input.GetKey("d") == true)
         {
             print("player pressed d");
+            rb.velocity = new Vector2(13f, rb.velocity.y);
+            sr.flipX = false;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow) == true)
+        {
+            rb.velocity = new Vector2(-13f, rb.velocity.y);
+            sr.flipX = true;
+        }
+        if (Input.GetKey(KeyCode.RightArrow) == true)
+        {
             rb.velocity = new Vector2(13f, rb.velocity.y);
             sr.flipX = false;
         }
